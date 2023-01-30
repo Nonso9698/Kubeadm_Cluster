@@ -146,6 +146,28 @@ apt update
 kubeadm init  --cri-socket /run/containerd/containerd.sock
 
 
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 172.31.26.103:6443 --token 5t6smb.dqt1tyu2kv8rfe1l \
+        --discovery-token-ca-cert-hash sha256:72dd68e82df484b2cb4008a969eb35f5a300f2f25abb301f4fbce63d2c35e269 
+
+
 
 #for master to run  pods as well because by default it is not allowed, run the following command
 #kubectl taint node $(hostname) node-role.kubernetes.io/control-plane:NoSchedule-
