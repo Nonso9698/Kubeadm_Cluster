@@ -1,5 +1,12 @@
 
 # make sure your server is up to date
+#Set the root password
+
+sudo password root
+
+#Set current admin password
+
+sudo password ubuntu
 #switch to root.
 
 #sudo su 
@@ -89,16 +96,16 @@ apt install -y containerd.io
 # Configure containerd:
 mkdir -p /etc/containerd
 containerd config default | tee /etc/containerd/config.toml
-
+apt update
 # Restart containerd:
 systemctl start containerd
-systemctl restart containerd
-systemctl enable containerd   
 
+systemctl enable containerd   
+systemctl restart containerd
 # enable kubelet:
 systemctl start kubelet
 systemctl enable kubelet
-
+systemctl restart kubelet
 #kubelet will start running only when a cluster is up
 
 apt update
@@ -128,7 +135,15 @@ apt update
 
 
 
-#===================== END of K8S installation for both master and nodes =========================================
+#===================== END of K8S installation for both master and nodes ========================================B
+
+#Before running kubeadm, make sure all required ports are open
+
+#6443, 2379-23980, 10248-10252, 30000-32767, HTTP(80), HTTPS(443)
+
+#For master only, run;
+
+kubeadm init  --cri-socket /run/containerd/containerd.sock
 
 
 
